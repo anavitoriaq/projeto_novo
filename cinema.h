@@ -1,46 +1,70 @@
-#ifndef CINEMA_H
-#define CINEMA_H
-
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <time.h>
 
-typedef struct filme {
-    char nome[100];
-    char genero[50];
-    int ano;
-    int faixaEtaria;
-    struct filme *proximo;  // Ponteiro para o próximo filme
-} Filme;
 
-typedef struct usuario {
+// Definição da struct de Pedido
+typedef struct Usuario{
+    int id;
     char nome[50];
     char senha[50];
     char email[80];
     int idade;
-    struct usuario *proximo;  // Ponteiro para o próximo usuário
+    struct Usuario * proximo;
 } Usuario;
 
-// Ponteiros para os cabeçalhos das listas
-extern Filme *cabecalhoFilmes;
-extern Usuario *cabecalhoUsuarios;
-extern Usuario usuarioAtual;
+// Função para capturar e validar a entrada
+int obterOpcaoMenu();
 
-// Funções para manipulação das listas encadeadas
-bool verificarEmail(const char *email);
-void cadastrarUsuario(Usuario *usuario);
-void salvarUsuarios();
-void carregarUsuarios();
-void cadastrarFilme();
-void salvarFilmes();
-void carregarFilmes();
-void listarFilmes();
-void editarFilme();
-void excluirFilme();
-void exibirDetalhesFilme();
-bool login();
-void mensagemBoasVindas(const Usuario *usuario);
-void menu();
+// Função para obter a data atual dd/mm/yyyy
+void obterData(char *data); 
 
-#endif // CINEMA_H
+// Função para verificar se a string contém apenas letras
+int apenasLetras(const char *str);
+
+// Função para verificar se a string contém apenas números
+int apenasNumeros(const char *str);
+
+// Função para obter uma entrada apenas com caracteres
+void obterEntradaApenasCaracteres(char *buffer, int tamanho, const char *prompt);
+
+// Função para obter o tipo de solicitante
+void obterTipoSolicitante(Usuario *pedido);
+
+// Função para obter a quantidade de páginas
+void obterQuantidadePaginas(int *quantidade);
+
+// Função para obter o novo status do pedido
+void Status(char *status);
+
+// Função para salvar pedidos no arquivo
+void salvarPedidoNoArquivo(Usuario* lista, const char* nomeArquivo);
+
+// Carrega os pedidos existentes do arquivo
+void carregarPedidosDoArquivo(Usuario** lista, const char* nomeArquivo);
+
+// Função para inserir um pedido na lista encadeada
+void inserirUsuarioNaLista(Usuario** lista, Usuario* novoPedido);
+
+// Função para adicionar um pedido
+void adicionarPedido(Usuario** lista);
+
+// Função para listar os pedidos
+void exibirUsuarios(Usuario *lista);
+
+// Função para excluir um pedido e atualizar os números
+void excluirPedido(Usuario** lista);
+
+// Função para editar um pedido 
+void editarPedido(Usuario *lista);
+
+// Função para buscar pedido por número ou nome
+void buscarPedido(Usuario * lista);
+
+// Função para consultar pedidos por status
+void consultarPedidoPorStatus(Usuario * lista);
+
+// Função para consultar total de copias realizadas e o valor arrecado 
+void consultarTotalCopiasValor(Usuario *lista);
